@@ -26,4 +26,6 @@ elaborated version of the _Hello World_ content type, because the source code al
   where they left off before.
 - A second class showing how you could organize your content instead of putting everything into one massive source file.
 
+There are several comments explaining what the code is used for. There are also comments starting with _TODO:_ hinting to things you should change.
+
 Now it's your turn! The sky is the limit!
