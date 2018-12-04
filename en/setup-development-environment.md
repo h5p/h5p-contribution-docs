@@ -15,8 +15,7 @@ When you have a webserver installed, you need to create a database, a database u
 a user password, of course. If you're using Xampp/Lampp, you can [use phpmyadmin](https://www.phpmyadmin.net/docs/) that's part of the bundle.
 
 ### The host system: Drupal 7 (in words: seven).
-Please install the latest version of Drupal 7 on the webserver that you have installed. It's not the latest version, but
-its H5P plugin has some development features that we need: [https://www.drupal.org/docs/7/install](https://www.drupal.org/docs/7/install
+Please install the latest version of Drupal 7 on the webserver that you have installed. It's not the latest Drupal version, but its H5P plugin has some development features that we need: [https://www.drupal.org/docs/7/install](https://www.drupal.org/docs/7/install
 ).
 
 ### The H5P plugin
