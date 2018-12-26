@@ -18,6 +18,9 @@ a user password, of course. If you're using Xampp/Lampp, you can [use phpmyadmin
 Please install the latest version of Drupal 7 on the webserver that you have installed. It's not the latest Drupal version, but its H5P plugin has some development features that we need: [https://www.drupal.org/docs/7/install](https://www.drupal.org/docs/7/install
 ).
 
+### Alternative: Docker webserver
+As an alternative to the Xampp/Lampp installation above, you can read about running Drupal 7 in a docker container [here](docker-webserver.md).
+
 ### The H5P plugin
 Go to the _module configuration page_ of your freshly installed Drupal instance and install the latest version of the H5P plugin found at:
 [https://www.drupal.org/project/h5p](https://www.drupal.org/project/h5p).
