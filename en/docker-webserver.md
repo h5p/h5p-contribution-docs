@@ -7,52 +7,47 @@ If you don't want to set up a Xampp/Lampp stack on your development machine, you
 * You can easily wipe the installation and start over if something went wrong.
 * It's requires fewer resources and maintenance than running Drupal in virtual machine.
 
-### Install docker
+
+### Installing docker
 Go to https://docs.docker.com/install/ and install Docker for your system. It is convenient to configure docker so that you can run ``docker`` as a normal user and don't have to use ``sudo`` every time.
 
-### Prepare local directory
-To develop h5p libraries in the docker container you need to be able to modify files inside the running container. The way docker does this is to mount "volumes" to paths in your file system. You can think of a volume as a symlink between a directory in your local file system and a directory in the container.
-
-The local directory must be write-accessible to the user ``www-data`` of the Drupal container and you must still be able write its contents from your development user account.
-
-Note: You can use the username ``www-data`` only if it is known to your local system. Alternatively, you can use ``33:33``, which is the user id of ``www-data`` inside the container.
+### Preparing the local data directory
+To develop H5P libraries in the Docker container you need to be able to modify files inside the running container. The way Docker does this is to mount "volumes" to paths in your file system. You can think of a volume as a symlink between a directory in your local file system and a directory in the container. Drupal stores all H5P data (content and libraries) in ```/var/www/html/sites/default/files```. You have to mount this path to a local directory. **The local directory must be write-accessible** to the user ``www-data`` of the Drupal container and **you must still be able write its contents from your development user account.** To achieve this execute the following from the command line:
 
 ```
 mkdir files
-sudo chown www-data:www-data files
 sudo chmod -R 777 files
 ```
 
-### Fetch and run container
-Navigate to the directory in which you've created the ``files`` directory and execute this command:
+### Running the container
+Navigate to the directory in which you've created the ``files`` directory and execute this command to fetch the container from the Docker Hub and execute it:
 ```
-sudo docker run --name drupaldev -d -p 8080:80 -v `pwd`/files:/var/www/sites/default/files -t wadmiraal/drupal:7
+sudo docker run --name drupaldev -d -p 8080:80 -v `pwd`/files:/var/www/html/sites/default/files -t sr258/drupal-h5p-docker
 ```
 
-This will get the container from the Docker Hub and execute it. We don't use the official Drupal 7 image, because mounting a volume to the path ``/var/www/sites/default/files`` causes permission issues when using it. (The path is created as root user before Drupal is installed and is thus not write-accessible for the www-data user.)
-
-### Access the container and configure H5P.
+### Accessing the container and configure H5P.
 You can access drupal at http://localhost:8080 (username: admin, password: admin)
 
-Now it's time to setup H5P as you normally would.
+Your first step should be to enable the "H5P development mode" and "library development directory" in the settings (see http://localhost:8080/node#overlay=admin/config/system/h5p).
 
-### Develop in the files directory
+## Developing H5P libraries
 You can now develop your libraries in the directory ``files/h5p/development`` on your local machine. All changes will be automatically synced to the docker container.
 
-### Stop the container
+### Stopping the container
+To stop the container and remove it from memory, execute the command below. If you restart it later, its execution state will be restored.
 ```
 sudo docker stop drupaldev
 ```
-This command will stop the container and remove it from memory, but not from disk. If you restart it later, its execution state will be restored.
 
-### Restart the stopped container
+### Restarting the stopped container
+To restart a stopped container execute this command:
 ``` 
 sudo docker restart drupaldev
 ```
 
-### Completely remove the container
-If you want to wipe the whole Drupal container:
+### Completely removing the container
+If you want to wipe the whole Drupal container (and all data inside), execute:
 ```
 sudo docker rm drupaldev
 ```
-This will not remove the files in the ``files`` directory, as docker volumes are designed to be persistent independent of container lifetime.
+This will not remove the files in the ``files`` directory, as Docker volumes are designed to be persistent independent of container lifetime.
